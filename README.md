@@ -2,6 +2,8 @@
 
 A simple, client-rendered Kanban board for moving product work forward.
 
+![Northstar Kanban board](./kanban-board.png)
+
 ## Features
 
 - One board with five renameable columns
