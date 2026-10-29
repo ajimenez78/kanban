@@ -1,0 +1,157 @@
+# Spec-to-Plan Traceability Checkpoint
+metadata:
+  generated: "2026-10-29"
+  source_spec: "AGENTS.md"
+  target_plan: "plan.md"
+
+summary:
+  total_requirements: 12
+  covered_requirements: 12
+  missing_requirements: 0
+  coverage_percentage: 100.0
+
+requirements:
+  - req_id: "REQ-001"
+    req_description: "Next.js app scaffolded in frontend with standard project setup"
+    priority: "P1"
+    plan_mapping:
+      phase: "Phase-1"
+      phase_name: "Setup"
+      items:
+        - item_id: "1.1"
+          description: "Scaffold the frontend"
+        - item_id: "4.4"
+          description: "Final acceptance and ready-to-use handoff"
+  - req_id: "REQ-002"
+    req_description: "One board with five renameable columns"
+    priority: "P1"
+    plan_mapping:
+      phase: "Phase-2"
+      phase_name: "Foundational board state"
+      items:
+        - item_id: "2.1"
+          description: "Define the fixed board and in-memory sample state"
+        - item_id: "3.1"
+          description: "Render and rename the five columns"
+        - item_id: "4.2"
+          description: "Add rigorous unit and browser integration tests"
+  - req_id: "REQ-003"
+    req_description: "Cards contain a title and details only"
+    priority: "P1"
+    plan_mapping:
+      phase: "Phase-2"
+      phase_name: "Foundational board state"
+      items:
+        - item_id: "2.1"
+          description: "Define the fixed board and in-memory sample state"
+        - item_id: "3.2"
+          description: "Add and delete cards"
+        - item_id: "4.2"
+          description: "Add rigorous unit and browser integration tests"
+  - req_id: "REQ-004"
+    req_description: "Drag cards between columns"
+    priority: "P1"
+    plan_mapping:
+      phase: "Phase-3"
+      phase_name: "Manage and move cards on one board"
+      items:
+        - item_id: "3.3"
+          description: "Move cards with drag and drop"
+        - item_id: "4.2"
+          description: "Add rigorous unit and browser integration tests"
+  - req_id: "REQ-005"
+    req_description: "Add a card to a column"
+    priority: "P1"
+    plan_mapping:
+      phase: "Phase-3"
+      phase_name: "Manage and move cards on one board"
+      items:
+        - item_id: "3.2"
+          description: "Add and delete cards"
+        - item_id: "4.2"
+          description: "Add rigorous unit and browser integration tests"
+  - req_id: "REQ-006"
+    req_description: "Delete an existing card"
+    priority: "P1"
+    plan_mapping:
+      phase: "Phase-3"
+      phase_name: "Manage and move cards on one board"
+      items:
+        - item_id: "3.2"
+          description: "Add and delete cards"
+        - item_id: "4.2"
+          description: "Add rigorous unit and browser integration tests"
+  - req_id: "REQ-007"
+    req_description: "Start with populated dummy data"
+    priority: "P1"
+    plan_mapping:
+      phase: "Phase-2"
+      phase_name: "Foundational board state"
+      items:
+        - item_id: "2.1"
+          description: "Define the fixed board and in-memory sample state"
+        - item_id: "4.2"
+          description: "Add rigorous unit and browser integration tests"
+  - req_id: "REQ-008"
+    req_description: "No persistence"
+    priority: "P1"
+    plan_mapping:
+      phase: "Phase-2"
+      phase_name: "Foundational board state"
+      items:
+        - item_id: "2.1"
+          description: "Define the fixed board and in-memory sample state"
+        - item_id: "4.2"
+          description: "Add rigorous unit and browser integration tests"
+  - req_id: "REQ-009"
+    req_description: "Polished UI using the specified palette"
+    priority: "P1"
+    plan_mapping:
+      phase: "Phase-4"
+      phase_name: "Polish, verification, and handoff"
+      items:
+        - item_id: "3.1"
+          description: "Render and rename the five columns"
+        - item_id: "4.1"
+          description: "Apply the visual system and accessible responsive layout"
+        - item_id: "4.4"
+          description: "Final acceptance and ready-to-use handoff"
+  - req_id: "REQ-010"
+    req_description: "Exclude archive, search/filter, and other features"
+    priority: "P1"
+    plan_mapping:
+      phase: "Phase-4"
+      phase_name: "Polish, verification, and handoff"
+      items:
+        - item_id: "4.4"
+          description: "Final acceptance and ready-to-use handoff"
+  - req_id: "REQ-011"
+    req_description: "Rigorous unit and integration tests"
+    priority: "P1"
+    plan_mapping:
+      phase: "Phase-4"
+      phase_name: "Polish, verification, and handoff"
+      items:
+        - item_id: "4.2"
+          description: "Add rigorous unit and browser integration tests"
+        - item_id: "4.3"
+          description: "Add rigorous unit and browser integration tests"
+        - item_id: "4.4"
+          description: "Final acceptance and ready-to-use handoff"
+  - req_id: "REQ-012"
+    req_description: "Finish with a running, browser-verified app"
+    priority: "P1"
+    plan_mapping:
+      phase: "Phase-4"
+      phase_name: "Polish, verification, and handoff"
+      items:
+        - item_id: "4.4"
+          description: "Final acceptance and ready-to-use handoff"
+
+missing_requirements: []
+orphan_plan_items: []
+
+validation:
+  passed: true
+  errors: []
+  warnings: []

@@ -1,0 +1,136 @@
+# Plan-to-Tasks Traceability Checkpoint
+metadata:
+  generated: "2026-10-29"
+  source_plan: "plan.md"
+  target_tasks: "plan.md"
+
+summary:
+  total_plan_items: 9
+  covered_plan_items: 9
+  missing_plan_items: 0
+  coverage_percentage: 100.0
+  total_tasks_generated: 18
+  orphan_tasks: 0
+
+phases:
+  - phase_id: "Phase-1"
+    phase_name: "Setup"
+    items:
+      - item_id: "1.1"
+        description: "Scaffold the frontend"
+        tasks:
+          - task_id: "T001"
+            description: "Scaffold the Next.js app in frontend"
+          - task_id: "T002"
+            description: "Add the repository-root .gitignore"
+  - phase_id: "Phase-2"
+    phase_name: "Foundational board state"
+    items:
+      - item_id: "2.1"
+        description: "Define the fixed board and in-memory sample state"
+        tasks:
+          - task_id: "T003"
+            description: "Define board types and initial sample data"
+          - task_id: "T004"
+            description: "Implement in-memory board state"
+  - phase_id: "Phase-3"
+    phase_name: "Manage and move cards on one board"
+    items:
+      - item_id: "3.1"
+        description: "Render and rename the five columns"
+        tasks:
+          - task_id: "T005"
+            description: "Implement the board view and column-name editing"
+      - item_id: "3.2"
+        description: "Add and delete cards"
+        tasks:
+          - task_id: "T006"
+            description: "Implement the add-card form"
+          - task_id: "T007"
+            description: "Implement card rendering and deletion"
+          - task_id: "T008"
+            description: "Connect add and delete to board state"
+      - item_id: "3.3"
+        description: "Move cards with drag and drop"
+        tasks:
+          - task_id: "T009"
+            description: "Integrate drag and drop"
+  - phase_id: "Phase-4"
+    phase_name: "Polish, verification, and handoff"
+    items:
+      - item_id: "4.1"
+        description: "Apply the visual system and accessible responsive layout"
+        tasks:
+          - task_id: "T010"
+            description: "Implement styling and palette tokens"
+          - task_id: "T011"
+            description: "Add app title and board structure"
+      - item_id: "4.2"
+        description: "Add unit and component tests"
+        tasks:
+          - task_id: "T012"
+            description: "Configure Vitest and React Testing Library"
+          - task_id: "T013"
+            description: "Test board initialization and state actions"
+          - task_id: "T014"
+            description: "Test user-facing board interactions"
+      - item_id: "4.3"
+        description: "Add browser integration tests"
+        tasks:
+          - task_id: "T015"
+            description: "Configure Playwright and test critical user flows"
+      - item_id: "4.4"
+        description: "Complete final acceptance and handoff"
+        tasks:
+          - task_id: "T016"
+            description: "Document app commands"
+          - task_id: "T017"
+            description: "Verify scope and run quality checks and tests"
+          - task_id: "T018"
+            description: "Start the server and verify the app in a browser"
+
+missing_plan_items: []
+orphan_tasks: []
+
+upstream_trace:
+  - plan_item: "1.1"
+    source_requirements: ["REQ-001"]
+    tasks: ["T001", "T002"]
+    full_trace: "REQ-001 → Phase-1.1 → T001,T002"
+  - plan_item: "2.1"
+    source_requirements: ["REQ-002", "REQ-003", "REQ-007", "REQ-008"]
+    tasks: ["T003", "T004"]
+    full_trace: "REQ-002,REQ-003,REQ-007,REQ-008 → Phase-2.1 → T003,T004"
+  - plan_item: "3.1"
+    source_requirements: ["REQ-002", "REQ-009"]
+    tasks: ["T005"]
+    full_trace: "REQ-002,REQ-009 → Phase-3.1 → T005"
+  - plan_item: "3.2"
+    source_requirements: ["REQ-003", "REQ-005", "REQ-006"]
+    tasks: ["T006", "T007", "T008"]
+    full_trace: "REQ-003,REQ-005,REQ-006 → Phase-3.2 → T006,T007,T008"
+  - plan_item: "3.3"
+    source_requirements: ["REQ-004"]
+    tasks: ["T009"]
+    full_trace: "REQ-004 → Phase-3.3 → T009"
+  - plan_item: "4.1"
+    source_requirements: ["REQ-009"]
+    tasks: ["T010", "T011"]
+    full_trace: "REQ-009 → Phase-4.1 → T010,T011"
+  - plan_item: "4.2"
+    source_requirements: ["REQ-002", "REQ-003", "REQ-004", "REQ-005", "REQ-006", "REQ-007", "REQ-008", "REQ-011"]
+    tasks: ["T012", "T013", "T014"]
+    full_trace: "REQ-002,REQ-003,REQ-004,REQ-005,REQ-006,REQ-007,REQ-008,REQ-011 → Phase-4.2 → T012,T013,T014"
+  - plan_item: "4.3"
+    source_requirements: ["REQ-011"]
+    tasks: ["T015"]
+    full_trace: "REQ-011 → Phase-4.3 → T015"
+  - plan_item: "4.4"
+    source_requirements: ["REQ-001", "REQ-009", "REQ-010", "REQ-011", "REQ-012"]
+    tasks: ["T016", "T017", "T018"]
+    full_trace: "REQ-001,REQ-009,REQ-010,REQ-011,REQ-012 → Phase-4.4 → T016,T017,T018"
+
+validation:
+  passed: true
+  errors: []
+  warnings: []

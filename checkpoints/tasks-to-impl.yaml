@@ -1,0 +1,541 @@
+# Tasks-to-Implementation Traceability Checkpoint
+metadata:
+  generated: "2026-10-29"
+  source_tasks: "plan.md"
+  last_updated: "2026-10-29"
+
+summary:
+  total_tasks: 18
+  completed_tasks: 18
+  in_progress_tasks: 0
+  pending_tasks: 0
+  completion_percentage: 100.0
+
+tasks:
+  - task_id: "T001"
+    description: "Scaffold the TypeScript Next.js app, package scripts, and lockfile"
+    status: "completed"
+    implementation:
+      files_changed:
+        - file: "frontend/package.json"
+          changes:
+            - change_type: "modified"
+              description: "Added app, test, lint, type-check, and build scripts and dependencies"
+        - file: "frontend/package-lock.json"
+          changes:
+            - change_type: "created"
+              description: "Locked frontend dependencies"
+    verification:
+      build_passed: true
+      test_results:
+        command: "cd frontend && npm test"
+        passed: 16
+        failed: 0
+        skipped: 0
+        failures: []
+      notes: "Production build, lint, and type-check passed."
+    upstream_trace:
+      plan_item: "1.1"
+      requirements: ["REQ-001"]
+      full_trace: "REQ-001 → Phase-1.1 → T001 → frontend/package.json"
+  - task_id: "T002"
+    description: "Add repository-root ignore rules"
+    status: "completed"
+    implementation:
+      files_changed:
+        - file: ".gitignore"
+          changes:
+            - change_type: "created"
+              description: "Ignore Node, Next.js, local environment, build, and test outputs"
+    verification:
+      build_passed: true
+      test_results:
+        command: "cd frontend && npm run build"
+        passed: 1
+        failed: 0
+        skipped: 0
+        failures: []
+      notes: "Generated output remains untracked."
+    upstream_trace:
+      plan_item: "1.1"
+      requirements: ["REQ-001"]
+      full_trace: "REQ-001 → Phase-1.1 → T002 → .gitignore"
+  - task_id: "T003"
+    description: "Define board and card types and initial sample data"
+    status: "completed"
+    implementation:
+      files_changed:
+        - file: "frontend/src/features/board/board-data.ts"
+          changes:
+            - change_type: "created"
+              description: "Define five columns and sample title/details cards"
+    verification:
+      build_passed: true
+      test_results:
+        command: "cd frontend && npm test"
+        passed: 16
+        failed: 0
+        skipped: 0
+        failures: []
+      notes: "Tests verify five columns and card fields."
+    upstream_trace:
+      plan_item: "2.1"
+      requirements: ["REQ-002", "REQ-003", "REQ-007"]
+      full_trace: "REQ-002,REQ-003,REQ-007 → Phase-2.1 → T003 → board-data.ts"
+  - task_id: "T004"
+    description: "Implement in-memory board state"
+    status: "completed"
+    implementation:
+      files_changed:
+        - file: "frontend/src/features/board/use-board.ts"
+          changes:
+            - change_type: "created"
+              description: "Implement rename, add, delete, and move state actions"
+    verification:
+      build_passed: true
+      test_results:
+        command: "cd frontend && npm test"
+        passed: 16
+        failed: 0
+        skipped: 0
+        failures: []
+      notes: "Reload behavior verified in Playwright."
+    upstream_trace:
+      plan_item: "2.1"
+      requirements: ["REQ-002", "REQ-003", "REQ-008"]
+      full_trace: "REQ-002,REQ-003,REQ-008 → Phase-2.1 → T004 → use-board.ts"
+  - task_id: "T005"
+    description: "Implement board view and accessible column renaming"
+    status: "completed"
+    implementation:
+      files_changed:
+        - file: "frontend/src/features/board/board.tsx"
+          changes:
+            - change_type: "created"
+              description: "Render five renameable columns and board summary"
+    verification:
+      build_passed: true
+      test_results:
+        command: "cd frontend && npm test && npm run test:e2e"
+        passed: 22
+        failed: 0
+        skipped: 0
+        failures: []
+      notes: "Column count and rename flow passed."
+    upstream_trace:
+      plan_item: "3.1"
+      requirements: ["REQ-002", "REQ-009"]
+      full_trace: "REQ-002,REQ-009 → Phase-3.1 → T005 → board.tsx"
+  - task_id: "T006"
+    description: "Implement title-and-details add-card form"
+    status: "completed"
+    implementation:
+      files_changed:
+        - file: "frontend/src/features/board/add-card-form.tsx"
+          changes:
+            - change_type: "created"
+              description: "Validate and submit a card with title and details only"
+        - file: "frontend/src/features/board/add-card-form.test.tsx"
+          changes:
+            - change_type: "created"
+              description: "Test card submission and empty/whitespace title validation"
+    verification:
+      build_passed: true
+      test_results:
+        command: "cd frontend && npm test"
+        passed: 16
+        failed: 0
+        skipped: 0
+        failures: []
+      notes: ""
+    upstream_trace:
+      plan_item: "3.2"
+      requirements: ["REQ-003", "REQ-005"]
+      full_trace: "REQ-003,REQ-005 → Phase-3.2 → T006 → add-card-form.tsx"
+  - task_id: "T007"
+    description: "Implement card rendering and deletion"
+    status: "completed"
+    implementation:
+      files_changed:
+        - file: "frontend/src/features/board/card.tsx"
+          changes:
+            - change_type: "created"
+              description: "Render card title/details, drag handle, and delete action"
+        - file: "frontend/src/features/board/card.test.tsx"
+          changes:
+            - change_type: "created"
+              description: "Test card display and deletion"
+    verification:
+      build_passed: true
+      test_results:
+        command: "cd frontend && npm test"
+        passed: 16
+        failed: 0
+        skipped: 0
+        failures: []
+      notes: ""
+    upstream_trace:
+      plan_item: "3.2"
+      requirements: ["REQ-003", "REQ-006"]
+      full_trace: "REQ-003,REQ-006 → Phase-3.2 → T007 → card.tsx"
+  - task_id: "T008"
+    description: "Connect add and delete actions to board state"
+    status: "completed"
+    implementation:
+      files_changed:
+        - file: "frontend/src/features/board/board.tsx"
+          changes:
+            - change_type: "modified"
+              description: "Wire form submission and card deletion to board state"
+    verification:
+      build_passed: true
+      test_results:
+        command: "cd frontend && npm run test:e2e"
+        passed: 6
+        failed: 0
+        skipped: 0
+        failures: []
+      notes: "Browser flow adds and then deletes a card."
+    upstream_trace:
+      plan_item: "3.2"
+      requirements: ["REQ-005", "REQ-006"]
+      full_trace: "REQ-005,REQ-006 → Phase-3.2 → T008 → board.tsx"
+  - task_id: "T009"
+    description: "Integrate pointer and keyboard drag-and-drop"
+    status: "completed"
+    implementation:
+      files_changed:
+        - file: "frontend/package.json"
+          changes:
+            - change_type: "modified"
+              description: "Add dnd-kit dependencies"
+        - file: "frontend/src/features/board/board.tsx"
+          changes:
+            - change_type: "modified"
+              description: "Move cards between columns by pointer or keyboard"
+    verification:
+      build_passed: true
+      test_results:
+        command: "cd frontend && npm run test:e2e"
+        passed: 6
+        failed: 0
+        skipped: 0
+        failures: []
+      notes: "Pointer and keyboard move tests both passed."
+    upstream_trace:
+      plan_item: "3.3"
+      requirements: ["REQ-004"]
+      full_trace: "REQ-004 → Phase-3.3 → T009 → board.tsx"
+  - task_id: "T010"
+    description: "Implement app shell, responsive styling, and palette"
+    status: "completed"
+    implementation:
+      files_changed:
+        - file: "frontend/src/app/globals.css"
+          changes:
+            - change_type: "created"
+              description: "Add palette tokens, accessible states, and responsive board layout"
+        - file: "frontend/src/app/layout.tsx"
+          changes:
+            - change_type: "modified"
+              description: "Set app metadata and root document"
+    verification:
+      build_passed: true
+      test_results:
+        command: "cd frontend && npm run test:e2e"
+        passed: 6
+        failed: 0
+        skipped: 0
+        failures: []
+      notes: "Responsive browser test passed."
+    upstream_trace:
+      plan_item: "4.1"
+      requirements: ["REQ-009"]
+      full_trace: "REQ-009 → Phase-4.1 → T010 → globals.css,layout.tsx"
+  - task_id: "T011"
+    description: "Add app title and board structure"
+    status: "completed"
+    implementation:
+      files_changed:
+        - file: "frontend/src/app/page.tsx"
+          changes:
+            - change_type: "created"
+              description: "Add the single-board application shell"
+    verification:
+      build_passed: true
+      test_results:
+        command: "cd frontend && npm run build"
+        passed: 1
+        failed: 0
+        skipped: 0
+        failures: []
+      notes: ""
+    upstream_trace:
+      plan_item: "4.1"
+      requirements: ["REQ-009"]
+      full_trace: "REQ-009 → Phase-4.1 → T011 → page.tsx"
+  - task_id: "T012"
+    description: "Configure Vitest and React Testing Library"
+    status: "completed"
+    implementation:
+      files_changed:
+        - file: "frontend/vitest.config.mts"
+          changes:
+            - change_type: "created"
+              description: "Configure test environment and exclude Playwright tests"
+        - file: "frontend/src/test/setup.ts"
+          changes:
+            - change_type: "created"
+              description: "Register jest-dom matchers and cleanup"
+        - file: "frontend/package.json"
+          changes:
+            - change_type: "modified"
+              description: "Add Vitest and Testing Library scripts/dependencies"
+    verification:
+      build_passed: true
+      test_results:
+        command: "cd frontend && npm test"
+        passed: 16
+        failed: 0
+        skipped: 0
+        failures: []
+      notes: ""
+    upstream_trace:
+      plan_item: "4.2"
+      requirements: ["REQ-011"]
+      full_trace: "REQ-011 → Phase-4.2 → T012 → vitest.config.mts"
+  - task_id: "T013"
+    description: "Test board initialization and state actions"
+    status: "completed"
+    implementation:
+      files_changed:
+        - file: "frontend/src/features/board/use-board.test.ts"
+          changes:
+            - change_type: "created"
+              description: "Test sample data, rename, add, delete, cross-column move, and same-column no-op"
+    verification:
+      build_passed: true
+      test_results:
+        command: "cd frontend && npm test"
+        passed: 16
+        failed: 0
+        skipped: 0
+        failures: []
+      notes: ""
+    upstream_trace:
+      plan_item: "4.2"
+      requirements: ["REQ-002", "REQ-003", "REQ-005", "REQ-006", "REQ-007", "REQ-008"]
+      full_trace: "REQ-002,REQ-003,REQ-005,REQ-006,REQ-007,REQ-008 → Phase-4.2 → T013 → use-board.test.ts"
+  - task_id: "T014"
+    description: "Test accessible board, rename, add, delete, and form validation"
+    status: "completed"
+    implementation:
+      files_changed:
+        - file: "frontend/src/features/board/board.test.tsx"
+          changes:
+            - change_type: "created"
+              description: "Test board rendering and user-facing board actions"
+        - file: "frontend/src/features/board/add-card-form.test.tsx"
+          changes:
+            - change_type: "created"
+              description: "Test required and whitespace-only title validation"
+        - file: "frontend/src/features/board/card.test.tsx"
+          changes:
+            - change_type: "created"
+              description: "Test card content and delete action"
+    verification:
+      build_passed: true
+      test_results:
+        command: "cd frontend && npm test"
+        passed: 16
+        failed: 0
+        skipped: 0
+        failures: []
+      notes: ""
+    upstream_trace:
+      plan_item: "4.2"
+      requirements: ["REQ-002", "REQ-003", "REQ-005", "REQ-006", "REQ-011"]
+      full_trace: "REQ-002,REQ-003,REQ-005,REQ-006,REQ-011 → Phase-4.2 → T014 → adjacent feature tests"
+  - task_id: "T015"
+    description: "Configure Playwright and cover browser journeys"
+    status: "completed"
+    implementation:
+      files_changed:
+        - file: "frontend/playwright.config.ts"
+          changes:
+            - change_type: "created"
+              description: "Configure Chromium tests and isolated development server"
+        - file: "frontend/e2e/board.spec.ts"
+          changes:
+            - change_type: "created"
+              description: "Test rendering, CRUD, pointer/keyboard drag, reload, and mobile layout"
+    verification:
+      build_passed: true
+      test_results:
+        command: "cd frontend && npm run test:e2e"
+        passed: 6
+        failed: 0
+        skipped: 0
+        failures: []
+      notes: "Playwright Chromium browser installed and all journeys passed."
+    upstream_trace:
+      plan_item: "4.3"
+      requirements: ["REQ-004", "REQ-005", "REQ-006", "REQ-008", "REQ-011"]
+      full_trace: "REQ-004,REQ-005,REQ-006,REQ-008,REQ-011 → Phase-4.3 → T015 → board.spec.ts"
+  - task_id: "T016"
+    description: "Document app commands"
+    status: "completed"
+    implementation:
+      files_changed:
+        - file: "frontend/README.md"
+          changes:
+            - change_type: "modified"
+              description: "Document install, run, and verification commands"
+    verification:
+      build_passed: true
+      test_results:
+        command: "cd frontend && npm run build"
+        passed: 1
+        failed: 0
+        skipped: 0
+        failures: []
+      notes: ""
+    upstream_trace:
+      plan_item: "4.4"
+      requirements: ["REQ-001", "REQ-011", "REQ-012"]
+      full_trace: "REQ-001,REQ-011,REQ-012 → Phase-4.4 → T016 → frontend/README.md"
+  - task_id: "T017"
+    description: "Verify scope and run all quality checks"
+    status: "completed"
+    implementation:
+      files_changed:
+        - file: "plan.md"
+          changes:
+            - change_type: "modified"
+              description: "Check off verified implementation tasks and criteria"
+    verification:
+      build_passed: true
+      test_results:
+        command: "cd frontend && npm test && npm run test:e2e && npm run lint && npm run typecheck && npm run build"
+        passed: 22
+        failed: 0
+        skipped: 0
+        failures: []
+      notes: "16 unit/component tests and 6 Playwright tests passed; all static checks and production build passed."
+    upstream_trace:
+      plan_item: "4.4"
+      requirements: ["REQ-009", "REQ-010", "REQ-011"]
+      full_trace: "REQ-009,REQ-010,REQ-011 → Phase-4.4 → T017 → verified frontend"
+  - task_id: "T018"
+    description: "Start the production server and verify the board"
+    status: "completed"
+    implementation:
+      files_changed: []
+    verification:
+      build_passed: true
+      test_results:
+        command: "curl --head http://127.0.0.1:3000/ and production browser inspection"
+        passed: 1
+        failed: 0
+        skipped: 0
+        failures: []
+      notes: "Production server returned HTTP 200; browser showed the sample board with five columns. Server remains running."
+    upstream_trace:
+      plan_item: "4.4"
+      requirements: ["REQ-012"]
+      full_trace: "REQ-012 → Phase-4.4 → T018 → http://127.0.0.1:3000/"
+
+pending_tasks: []
+untracked_changes: []
+
+traceability_chain:
+  - chain_id: "TRACE-001"
+    requirement: "REQ-001"
+    plan_phase: "Phase-1"
+    plan_item: "1.1"
+    tasks: ["T001", "T002", "T016"]
+    files: [".gitignore", "frontend/package.json", "frontend/package-lock.json", "frontend/README.md"]
+    status: "complete"
+  - chain_id: "TRACE-002"
+    requirement: "REQ-002"
+    plan_phase: "Phase-2 and Phase-3"
+    plan_item: "2.1, 3.1"
+    tasks: ["T003", "T004", "T005", "T013", "T014"]
+    files: ["frontend/src/features/board/board-data.ts", "frontend/src/features/board/use-board.ts", "frontend/src/features/board/board.tsx"]
+    status: "complete"
+  - chain_id: "TRACE-003"
+    requirement: "REQ-003"
+    plan_phase: "Phase-2 and Phase-3"
+    plan_item: "2.1, 3.2"
+    tasks: ["T003", "T006", "T007", "T013", "T014"]
+    files: ["frontend/src/features/board/board-data.ts", "frontend/src/features/board/add-card-form.tsx", "frontend/src/features/board/card.tsx"]
+    status: "complete"
+  - chain_id: "TRACE-004"
+    requirement: "REQ-004"
+    plan_phase: "Phase-3 and Phase-4"
+    plan_item: "3.3, 4.3"
+    tasks: ["T009", "T015"]
+    files: ["frontend/src/features/board/board.tsx", "frontend/e2e/board.spec.ts"]
+    status: "complete"
+  - chain_id: "TRACE-005"
+    requirement: "REQ-005"
+    plan_phase: "Phase-3"
+    plan_item: "3.2"
+    tasks: ["T006", "T008", "T014", "T015"]
+    files: ["frontend/src/features/board/add-card-form.tsx", "frontend/src/features/board/board.tsx", "frontend/e2e/board.spec.ts"]
+    status: "complete"
+  - chain_id: "TRACE-006"
+    requirement: "REQ-006"
+    plan_phase: "Phase-3"
+    plan_item: "3.2"
+    tasks: ["T007", "T008", "T014", "T015"]
+    files: ["frontend/src/features/board/card.tsx", "frontend/src/features/board/board.tsx", "frontend/e2e/board.spec.ts"]
+    status: "complete"
+  - chain_id: "TRACE-007"
+    requirement: "REQ-007"
+    plan_phase: "Phase-2"
+    plan_item: "2.1"
+    tasks: ["T003", "T013", "T015"]
+    files: ["frontend/src/features/board/board-data.ts", "frontend/e2e/board.spec.ts"]
+    status: "complete"
+  - chain_id: "TRACE-008"
+    requirement: "REQ-008"
+    plan_phase: "Phase-2 and Phase-4"
+    plan_item: "2.1, 4.3"
+    tasks: ["T004", "T013", "T015"]
+    files: ["frontend/src/features/board/use-board.ts", "frontend/e2e/board.spec.ts"]
+    status: "complete"
+  - chain_id: "TRACE-009"
+    requirement: "REQ-009"
+    plan_phase: "Phase-3 and Phase-4"
+    plan_item: "3.1, 4.1"
+    tasks: ["T005", "T010", "T011", "T017"]
+    files: ["frontend/src/app/globals.css", "frontend/src/app/layout.tsx", "frontend/src/app/page.tsx"]
+    status: "complete"
+  - chain_id: "TRACE-010"
+    requirement: "REQ-010"
+    plan_phase: "Phase-4"
+    plan_item: "4.4"
+    tasks: ["T017"]
+    files: ["frontend/src"]
+    status: "complete"
+  - chain_id: "TRACE-011"
+    requirement: "REQ-011"
+    plan_phase: "Phase-4"
+    plan_item: "4.2, 4.3, 4.4"
+    tasks: ["T012", "T013", "T014", "T015", "T017"]
+    files: ["frontend/vitest.config.mts", "frontend/src/features/board", "frontend/e2e/board.spec.ts"]
+    status: "complete"
+  - chain_id: "TRACE-012"
+    requirement: "REQ-012"
+    plan_phase: "Phase-4"
+    plan_item: "4.4"
+    tasks: ["T016", "T018"]
+    files: ["frontend/README.md"]
+    status: "complete"
+
+validation:
+  passed: true
+  errors: []
+  warnings: []
+  blocking_issues: []
