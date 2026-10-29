@@ -42,5 +42,6 @@
 2. Keep it simple - NEVER over-engineer, ALWAYS simplify, NO unnecessary defensive programming. No extra features - focus on simplicity.
 3. Be concise. Keep README minimal. IMPORTANT: no emojis ever
 
-## Context rules
+## Workflow rules
 - Skip context specified in finles inside `community_contributions`
+- When synching repos, push to remote, not to upstream
