@@ -476,6 +476,33 @@ a {
   box-shadow: 0 0 0 3px rgb(32 157 215 / 8%);
 }
 
+.kanban-column-drop-target {
+  border-color: var(--blue-primary);
+  outline: 1px dashed rgb(32 157 215 / 65%);
+  outline-offset: 3px;
+  background: #edf8fd;
+  box-shadow:
+    0 0 0 4px rgb(32 157 215 / 11%),
+    0 8px 20px rgb(32 157 215 / 10%);
+  transform: translateY(-2px);
+}
+
+.drop-target-hint {
+  display: flex;
+  min-height: 38px;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  margin-top: 9px;
+  border: 1px dashed rgb(32 157 215 / 45%);
+  border-radius: 8px;
+  color: #167eae;
+  background: rgb(255 255 255 / 78%);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1px;
+}
+
 .column-header {
   min-height: 28px;
   margin-bottom: 10px;
@@ -633,7 +660,46 @@ a {
 
 .task-card-dragging {
   z-index: 2;
-  opacity: 0.45;
+  border: 1px dashed #93bad0;
+  background: #eef6fa;
+  box-shadow: none;
+  opacity: 0.5;
+}
+
+.task-card-preview {
+  position: relative;
+  width: 220px;
+  min-height: 80px;
+  padding: 25px 13px 13px;
+  border: 1px solid rgb(32 157 215 / 70%);
+  border-radius: 11px;
+  background: #fff;
+  box-shadow:
+    0 20px 45px rgb(3 33 71 / 22%),
+    0 4px 12px rgb(32 157 215 / 16%);
+  cursor: grabbing;
+  transform: rotate(-1.5deg) scale(1.025);
+  animation: card-lift 140ms ease-out both;
+}
+
+.drag-preview-handle {
+  position: absolute;
+  top: 8px;
+  left: 12px;
+  color: var(--blue-primary);
+  line-height: 0;
+}
+
+@keyframes card-lift {
+  from {
+    opacity: 0.6;
+    transform: translateY(4px) rotate(0) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) rotate(-1.5deg) scale(1.025);
+  }
 }
 
 .task-card-topline {

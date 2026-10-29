@@ -3,12 +3,17 @@
 import {
   closestCorners,
   DndContext,
+  DragOverlay,
   KeyboardSensor,
   PointerSensor,
+  pointerWithin,
   useDroppable,
   useSensor,
   useSensors,
+  type CollisionDetection,
   type DragEndEvent,
+  type DragOverEvent,
+  type DragStartEvent,
 } from "@dnd-kit/core";
 import {
   SortableContext,
@@ -17,6 +22,8 @@ import {
 } from "@dnd-kit/sortable";
 import {
   Check,
+  GripVertical,
+  MoveDown,
   PanelsTopLeft,
   Pencil,
   Plus,
@@ -30,7 +37,9 @@ import { useBoard } from "./use-board";
 
 type ColumnProps = {
   column: BoardColumn;
+  isDragging: boolean;
   isEditing: boolean;
+  isDropTarget: boolean;
   onAdd: (title: string, details: string) => void;
   onDelete: (cardId: string) => void;
   onEdit: () => void;
@@ -39,7 +48,9 @@ type ColumnProps = {
 
 function BoardColumnView({
   column,
+  isDragging,
   isEditing,
+  isDropTarget,
   onAdd,
   onDelete,
   onEdit,
@@ -62,7 +73,7 @@ function BoardColumnView({
   return (
     <section
       aria-labelledby={`column-title-${column.id}`}
-      className={`kanban-column${isOver ? " kanban-column-over" : ""}`}
+      className={`kanban-column${isOver ? " kanban-column-over" : ""}${isDropTarget ? " kanban-column-drop-target" : ""}`}
       ref={setNodeRef}
       role="region"
     >
@@ -132,6 +143,13 @@ function BoardColumnView({
         </div>
       </SortableContext>
 
+      {isDragging && isDropTarget && (
+        <div className="drop-target-hint" aria-live="polite">
+          <MoveDown aria-hidden="true" size={14} />
+          Drop here
+        </div>
+      )}
+
       {isAdding ? (
         <AddCardForm
           onAdd={(title, details) => {
@@ -158,30 +176,67 @@ function BoardColumnView({
 export function Board() {
   const { columns, renameColumn, addCard, deleteCard, moveCard } = useBoard();
   const [editingColumnId, setEditingColumnId] = useState<string | null>(null);
+  const [activeCardId, setActiveCardId] = useState<string | null>(null);
+  const [overColumnId, setOverColumnId] = useState<string | null>(null);
   const sensors = useSensors(
-    useSensor(PointerSensor, { activationConstraint: { distance: 6 } }),
+    useSensor(PointerSensor, { activationConstraint: { distance: 4 } }),
     useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates }),
   );
+  const activeCard = columns
+    .flatMap((column) => column.cards)
+    .find((card) => card.id === activeCardId);
   const cardCount = columns.reduce(
     (total, column) => total + column.cards.length,
     0,
   );
 
+  const collisionDetection: CollisionDetection = (args) => {
+    if (args.pointerCoordinates) {
+      return pointerWithin(args);
+    }
+
+    return closestCorners(args);
+  };
+
+  function getColumnIdForTarget(targetId: string): string | null {
+    const column = columns.find(
+      (item) => item.id === targetId || `column:${item.id}` === targetId,
+    );
+    if (column) {
+      return column.id;
+    }
+
+    return (
+      columns.find((item) =>
+        item.cards.some((card) => card.id === targetId),
+      )?.id ?? null
+    );
+  }
+
+  function handleDragStart({ active }: DragStartEvent) {
+    setActiveCardId(active.id.toString());
+  }
+
+  function handleDragOver({ over }: DragOverEvent) {
+    setOverColumnId(over ? getColumnIdForTarget(over.id.toString()) : null);
+  }
+
   function handleDragEnd({ active, over }: DragEndEvent) {
-    if (!over) {
-      return;
+    const destinationId = over
+      ? getColumnIdForTarget(over.id.toString())
+      : null;
+
+    if (destinationId) {
+      moveCard(active.id.toString(), destinationId);
     }
 
-    const destinationId = over.id.toString();
-    const destination =
-      columns.find((column) => `column:${column.id}` === destinationId) ??
-      columns.find((column) =>
-        column.cards.some((card) => card.id === destinationId),
-      );
+    setActiveCardId(null);
+    setOverColumnId(null);
+  }
 
-    if (destination) {
-      moveCard(active.id.toString(), destination.id);
-    }
+  function handleDragCancel() {
+    setActiveCardId(null);
+    setOverColumnId(null);
   }
 
   return (
@@ -210,9 +265,12 @@ export function Board() {
       </div>
 
       <DndContext
-        collisionDetection={closestCorners}
+        collisionDetection={collisionDetection}
         id="kanban-board"
+        onDragCancel={handleDragCancel}
         onDragEnd={handleDragEnd}
+        onDragOver={handleDragOver}
+        onDragStart={handleDragStart}
         sensors={sensors}
       >
         <div className="board-scroll">
@@ -220,7 +278,9 @@ export function Board() {
             {columns.map((column) => (
               <BoardColumnView
                 column={column}
+                isDragging={activeCardId !== null}
                 isEditing={editingColumnId === column.id}
+                isDropTarget={overColumnId === column.id}
                 key={column.id}
                 onAdd={(title, details) => addCard(column.id, title, details)}
                 onDelete={deleteCard}
@@ -237,6 +297,23 @@ export function Board() {
             ))}
           </div>
         </div>
+        <DragOverlay dropAnimation={{ duration: 180, easing: "ease-out" }}>
+          {activeCard && (
+            <article
+              aria-label={`Dragging card: ${activeCard.title}`}
+              className="task-card task-card-preview"
+              role="region"
+            >
+              <span aria-hidden="true" className="drag-preview-handle">
+                <GripVertical size={15} />
+              </span>
+              <h3 className="task-card-title">{activeCard.title}</h3>
+              {activeCard.details && (
+                <p className="task-card-details">{activeCard.details}</p>
+              )}
+            </article>
+          )}
+        </DragOverlay>
       </DndContext>
     </section>
   );
